@@ -120,7 +120,7 @@ namespace EPAM_Task1
                         string space = new(' ', triangles - j - 1);
                         string stars = new('*', starsCount);
                         starsCount += 2;
-                        Console.WriteLine(space+stars);
+                        Console.WriteLine(space + stars);
                     }
                 }
             }
@@ -215,7 +215,7 @@ namespace EPAM_Task1
                         default:
                             Console.WriteLine("Incorrect input.");
                             break;
-                       
+
                     }
                     checking = int.Parse(Console.ReadLine());
                 }
@@ -289,7 +289,7 @@ namespace EPAM_Task1
                     Console.Write("{0} ", array[i]);
                 }
                 Console.WriteLine();
-                Sort(array); 
+                Sort(array);
                 Console.Write("Sorted array: ");
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -317,7 +317,7 @@ namespace EPAM_Task1
                         for (int j = 0; j < array.GetLength(2); j++)
                         {
                             array[i, k, j] = rnd.Next(-10, 10);
-                            Console.Write("{0} ", array[i,k,j]);
+                            Console.Write("{0} ", array[i, k, j]);
                         }
                         Console.WriteLine();
                     }
@@ -335,7 +335,7 @@ namespace EPAM_Task1
                                 array[i, k, j] = 0;
                                 Console.Write("{0} ", array[i, k, j]);
                             }
-                            else 
+                            else
                                 Console.Write("{0} ", array[i, k, j]);
                         }
                         Console.WriteLine();
@@ -361,7 +361,7 @@ namespace EPAM_Task1
                 {
                     array[i] = rnd.Next(-10, 10);
                     if (array[i] > 0) // не берем 0, т.к. он на сумму все равно не повлияет
-                        sum += array[i]; 
+                        sum += array[i];
                     Console.Write("{0} ", array[i]);
                 }
                 Console.WriteLine("\nSum of non-negative elements = {0}", sum);
@@ -385,7 +385,7 @@ namespace EPAM_Task1
                     for (int k = 0; k < array.GetLength(1); k++)
                     {
                         array[i, k] = rnd.Next(1, 5);
-                        Console.Write("{0} ", array[i,k]);
+                        Console.Write("{0} ", array[i, k]);
                     }
                 }
                 for (int i = 0; i < array.GetLength(0); i++)
@@ -393,7 +393,7 @@ namespace EPAM_Task1
                     for (int k = 0; k < array.GetLength(1); k++)
                     {
                         if ((i + k) % 2 == 0)
-                            sum +=array[i, k];
+                            sum += array[i, k];
                     }
                 }
                 Console.WriteLine("\nSum = {0}", sum);
