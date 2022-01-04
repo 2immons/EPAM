@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM Task 1.1", "EPAM Task 1.1.csproj", "{D9113D01-7387-4E95-81D4-8FE422E10061}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPAM Task 1.1", "EPAM Task 1.1.csproj", "{4677E24D-16CD-4216-82FE-286094BE7E0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D9113D01-7387-4E95-81D4-8FE422E10061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9113D01-7387-4E95-81D4-8FE422E10061}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9113D01-7387-4E95-81D4-8FE422E10061}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9113D01-7387-4E95-81D4-8FE422E10061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4677E24D-16CD-4216-82FE-286094BE7E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4677E24D-16CD-4216-82FE-286094BE7E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4677E24D-16CD-4216-82FE-286094BE7E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4677E24D-16CD-4216-82FE-286094BE7E0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B7D575ED-7EDD-4DCD-9081-BD5BD4AB1836}
+		SolutionGuid = {0D826E13-F720-4F62-BDD7-1502A61E836B}
 	EndGlobalSection
 EndGlobal

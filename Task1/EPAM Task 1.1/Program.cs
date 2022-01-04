@@ -160,95 +160,95 @@ namespace EPAM_Task1
                 int checking = int.Parse(Console.ReadLine());
                 while (checking != 0)
                 {
-                    switch (checking)
+                    if (checking == 1)
                     {
-                        case 1:
-                            if (settingsString.Contains("Bold"))
-                            {
-                                settingsString.Remove("Bold");
-                                if (settingsString.Count == 0)
-                                    settingsString.Add("None");
-                            }
-                            else if (settingsString.Contains("Italic") || settingsString.Contains("Underline"))
-                                settingsString.Add("Bold");
-                            else if (settingsString.Contains("None"))
-                            {
-                                settingsString.Remove("None");
-                                settingsString.Add("Bold");
-                            }
-                            Print(settingsString);
-                            break;
-                        case 2:
-                            if (settingsString.Contains("Italic"))
-                            {
-                                settingsString.Remove("Italic");
-                                if (settingsString.Count == 0)
-                                    settingsString.Add("None");
-                            }
-                            else if (settingsString.Contains("Bold") || settingsString.Contains("Underline"))
-                                settingsString.Add("Italic");
-                            else if (settingsString.Contains("None"))
-                            {
-                                settingsString.Remove("None");
-                                settingsString.Add("Italic");
-                            }
-                            Print(settingsString);
-                            break;
-                        case 3:
-                            if (settingsString.Contains("Underline"))
-                            {
-                                settingsString.Remove("Underline");
-                                if (settingsString.Count == 0)
-                                    settingsString.Add("None");
-                            }
-                            else if (settingsString.Contains("Bold") || settingsString.Contains("Italic"))
-                                settingsString.Add("Underline");
-                            else if (settingsString.Contains("None"))
-                            {
-                                settingsString.Remove("None");
-                                settingsString.Add("Underline");
-                            }
-                            Print(settingsString);
-                            break;
-                        case 0: // точка выхода
-                            break;
-                        default:
-                            Console.WriteLine("Incorrect input.");
-                            break;
-
+                        if (settingsString.Contains("Bold"))
+                        {
+                            settingsString.Remove("Bold");
+                            if (settingsString.Count == 0)
+                                settingsString.Add("None");
+                        }
+                        else if (settingsString.Contains("Italic") || settingsString.Contains("Underline"))
+                            settingsString.Add("Bold");
+                        else if (settingsString.Contains("None"))
+                        {
+                            settingsString.Remove("None");
+                            settingsString.Add("Bold");
+                        }
+                        Print(settingsString);
                     }
+                    else if (checking == 2)
+                    {
+                        if (settingsString.Contains("Italic"))
+                        {
+                            settingsString.Remove("Italic");
+                            if (settingsString.Count == 0)
+                                settingsString.Add("None");
+                        }
+                        else if (settingsString.Contains("Bold") || settingsString.Contains("Underline"))
+                            settingsString.Add("Italic");
+                        else if (settingsString.Contains("None"))
+                        {
+                            settingsString.Remove("None");
+                            settingsString.Add("Italic");
+                        }
+                        Print(settingsString);
+                    }
+                    else if (checking == 3)
+                    {
+                        if (settingsString.Contains("Underline"))
+                        {
+                            settingsString.Remove("Underline");
+                            if (settingsString.Count == 0)
+                                settingsString.Add("None");
+                        }
+                        else if (settingsString.Contains("Bold") || settingsString.Contains("Italic"))
+                            settingsString.Add("Underline");
+                        else if (settingsString.Contains("None"))
+                        {
+                            settingsString.Remove("None");
+                            settingsString.Add("Underline");
+                        }
+                        Print(settingsString);
+                    }
+                    else if (checking == 0)
+                        break;
+                    else
+                        Console.WriteLine("Incorrect input.");
                     checking = int.Parse(Console.ReadLine());
                 }
-
-                static void Print(List<string> settingsString)
-                {
-                    Console.Write("Параметры надписи: ");
-                    int itemСount = 0; // счетчик для запятых
-                    foreach (string item in settingsString)
-                    {
-                        if (itemСount != 0)
-                        {
-                            Console.Write(", {0}", item);
-                        }
-                        else
-                        {
-                            Console.Write("{0}", item);
-                            itemСount++;
-                        }
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine("Введите:");
-                    Console.WriteLine("\t1. Bold");
-                    Console.WriteLine("\t2. Italic");
-                    Console.WriteLine("\t3. Underline");
-                }
+                
             }
+
+            static void Print(List<string> settingsString)
+            {
+                Console.Write("Параметры надписи: ");
+                int itemСount = 0; // счетчик для запятых
+                foreach (string item in settingsString)
+                {
+                    if (itemСount != 0)
+                    {
+                        Console.Write(", {0}", item);
+                    }
+                    else
+                    {
+                        Console.Write("{0}", item);
+                        itemСount++;
+                    }
+                }
+                Console.WriteLine();
+                Console.WriteLine("Введите:");
+                Console.WriteLine("\t1. Bold");
+                Console.WriteLine("\t2. Italic");
+                Console.WriteLine("\t3. Underline");
+            }
+
 
             /*
             1.1.7 ARRAY PROCESSING
             Написать программу, которая генерирует случайным образом элементы массива (число элементов в массиве и их тип определяются разработчиком), 
             определяет для него максимальное и минимальное значения, сортирует массив и выводит полученный результат на экран.
-           */
+            */
             Console.WriteLine("\n");
             ArrayProcessing();
             static void ArrayProcessing()
