@@ -36,8 +36,6 @@ namespace Program
         public int Width { get; set; }
         public int Height { get; set; }
 
-        // для треугольника еще
-
     }
 
     public class Line : Figure
