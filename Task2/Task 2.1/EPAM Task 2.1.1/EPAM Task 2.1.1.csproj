@@ -8,4 +8,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StringAsArrayLibrary\StringAsArrayLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="StringAsArray">
+      <HintPath>..\StringAsArray\bin\Debug\net6.0\StringAsArray.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
