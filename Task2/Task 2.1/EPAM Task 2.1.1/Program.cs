@@ -5,7 +5,6 @@ namespace Task
 {
     class Program
     {
-        // метод демонстрации функционала - PrintTask
         static void PrintTask(StringAsArray str1, StringAsArray str2)
         {
             Console.WriteLine("String1 + string2 = {0}", str1 + str2);
@@ -17,18 +16,16 @@ namespace Task
             else if (str1 == str2)
                 Console.WriteLine("String1 = string2");
 
-            // тут нужно как-то исправить ввод, чтобы проверять не нулевые:
-
             Console.Write("Enter string to search in string1: ");
             string strForSearch = Console.ReadLine();
-            int index1 = StringAsArray.IndexOf(str1, strForSearch); // вот тут
+            int index1 = StringAsArray.IndexOf(str1, strForSearch);
             if (index1 < 0)
                 Console.WriteLine("There is no '{0}' string in string1...", strForSearch);
             else
                 Console.WriteLine("String '{0}' was found, it's first entry index = {1}", strForSearch, index1);
 
             Console.Write("Enter char to search in string1: ");
-            char.TryParse(Console.ReadLine(), out char charForSearch); // и тут и чутьпониже тоэе
+            char.TryParse(Console.ReadLine(), out char charForSearch);
             int index2 = StringAsArray.IndexOf(str1, charForSearch);
             if (index2 < 0)
                 Console.WriteLine("There is no '{0}' char in string1...", charForSearch);
