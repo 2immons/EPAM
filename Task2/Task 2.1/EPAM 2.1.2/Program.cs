@@ -112,7 +112,6 @@ namespace Program
                 foreach (var item in listOfFigures)
                 {
                     if (item.GetType() == typeof(Ring))
-<<<<<<< HEAD
                         Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}, InRadius = {4}", typeof(Ring), item.X, item.Y, item.outRadius, item.inRadius);
                     else if (item.GetType() == typeof(Circle))
                         Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}", typeof(Circle), item.X, item.Y, item.outRadius);
@@ -124,24 +123,10 @@ namespace Program
                         Console.WriteLine("{0} : First point: {1}, {2} ; Second point = {3}, {4}", typeof(Line), item.X, item.Y, item.Width, item.Height);
                     else if (item.GetType() == typeof(Сircumference))
                         Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}", typeof(Circle), item.X, item.Y, item.outRadius);
-=======
-                        Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}, InRadius = {4}\n", typeof(Ring), item.X, item.Y, item.outRadius, item.inRadius);
-                    else if (item.GetType() == typeof(Circle))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}\n", typeof(Circle), item.X, item.Y, item.outRadius);
-                    else if (item.GetType() == typeof(Rectangle))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; Height = {3}, Width = {4}\n", typeof(Rectangle), item.X, item.Y, item.Height, item.Width);
-                    else if (item.GetType() == typeof(Square))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; Height = {3}, Width = {4}\n", typeof(Square), item.X, item.Y, item.Height);
-                    else if (item.GetType() == typeof(Line))
-                        Console.WriteLine("{0} : First point: {1}, {2} ; Second point = {3}, {4}\n", typeof(Line), item.X, item.Y, item.X + item.Width, item.Y + item.Height);
-                    else if (item.GetType() == typeof(Сircumference))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}\n", typeof(Circle), item.X, item.Y, item.outRadius);
->>>>>>> task-2.1.2
                 }
             else Console.WriteLine("No figures added...");
         }
 
-<<<<<<< HEAD
         static int PrintWindow(string name)
         {
             Console.WriteLine("{0}, enter:", name);
@@ -157,22 +142,11 @@ namespace Program
             if (Int32.TryParse(value, out int result))
                 return result;
             return 0;
-=======
-        static void Paint(int index)
-        {
-            // через что рисовать? WPF долго, плюс не "свой"
-            Console.WriteLine("Cancel image - enter");
-            while (Console.ReadKey().Key != ConsoleKey.Enter)
-            {
-
-            }
->>>>>>> task-2.1.2
         }
 
         static void Main()
         {
             List<Figure> listOfFigures = new List<Figure>();
-<<<<<<< HEAD
 
             Console.Write("Etner name: ");
             string name = Console.ReadLine();
@@ -255,82 +229,6 @@ namespace Program
 
                     else if (index == 3)
                     {
-=======
-            // можно переделать на кнопки 1-2-3 типа
-
-            Console.WriteLine("Enter Ring (RI), Circle (C), Сircumference (CF), Rectangle (RT), Square (S), INFO, DELETE, PAINT:");
-            while (true)
-            {
-                string function = Console.ReadLine().ToLower();
-                switch (function)
-                {
-                    case "ri":
-                        Console.WriteLine("Enter: center, radius - 'x, y, in radius, out radius'");
-                        int x = int.Parse(Console.ReadLine());
-                        int y = int.Parse(Console.ReadLine());
-                        int outRadius = int.Parse(Console.ReadLine());
-                        int inRadius = int.Parse(Console.ReadLine());
-                        listOfFigures.Add(new Ring(x, y, outRadius, inRadius));
-                        break;
-
-                    case "c":
-                        Console.WriteLine("Enter: center, radius - 'x, y, radius'");
-                        x = int.Parse(Console.ReadLine());
-                        y = int.Parse(Console.ReadLine());
-                        outRadius = int.Parse(Console.ReadLine());
-                        listOfFigures.Add(new Circle(x, y, outRadius));
-                        break;
-
-                    case "cf":
-                        Console.WriteLine("Enter: center, radius - 'x, y, radius'");
-                        x = int.Parse(Console.ReadLine());
-                        y = int.Parse(Console.ReadLine());
-                        outRadius = int.Parse(Console.ReadLine());
-                        listOfFigures.Add(new Сircumference(x, y, outRadius));
-                        break;
-
-                    case "rt":
-                        Console.WriteLine("Enter: center, sides - 'x, y, width, heigth'");
-                        x = int.Parse(Console.ReadLine());
-                        y = int.Parse(Console.ReadLine());
-                        int width = int.Parse(Console.ReadLine());
-                        int height = int.Parse(Console.ReadLine());
-                        listOfFigures.Add(new Rectangle(x, y, width, height));
-                        break;
-
-                    case "s":
-                        Console.WriteLine("Enter: center, radius - 'x, y, radius'");
-                        x = int.Parse(Console.ReadLine());
-                        y = int.Parse(Console.ReadLine());
-                        width = int.Parse(Console.ReadLine());
-                        listOfFigures.Add(new Square(x, y, width));
-                        break;
-                    case "l": // исправить снизу ввод корректнее сделать
-                        Console.WriteLine("Enter: center, radius - 'x, y, radius'");
-                        x = int.Parse(Console.ReadLine());
-                        y = int.Parse(Console.ReadLine());
-                        width = int.Parse(Console.ReadLine());
-                        listOfFigures.Add(new Square(x, y, width));
-                        break;
-
-                    case "info":
-                        Info(listOfFigures);
-                        break;
-
-                    case "paint":
-                        if (listOfFigures.Count > 0)
-                        {
-                            Console.Write("Enter the index, the picture corresponding to which will be drawn: \n");
-                            Info(listOfFigures);
-                            int index = int.Parse(Console.ReadLine());
-                            Paint(index);
-                        }
-                        else
-                            Console.WriteLine("Nothing to paint...");
-                        break;
-
-                    case "delete":
->>>>>>> task-2.1.2
                         if (listOfFigures.Count > 0)
                         {
                             listOfFigures.Clear();
@@ -338,7 +236,6 @@ namespace Program
                         }
                         else
                             Console.WriteLine("Nothing to delete...");
-<<<<<<< HEAD
                     }
 
                     else if (index == 4)
@@ -354,15 +251,6 @@ namespace Program
 
                     index = PrintWindow(name);
                 }
-=======
-                        break;
-
-                    default:
-                        Console.WriteLine("Wrong input...");
-                        break;
-                }
-                Console.WriteLine("\nEnter Ring (RI), Circle (C), Сircumference (CF), Line (L), Rectangle (RT), Square (S), INFO, DELETE, PAINT:");
->>>>>>> task-2.1.2
             }
         }
     }
