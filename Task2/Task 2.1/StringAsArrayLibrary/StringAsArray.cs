@@ -81,19 +81,19 @@
             return str;
         }
 
-        public static int IndexOf(StringAsArray str, string sStr) // поиск первого вхождения в массив символов строки
-        {
-            return str.ToString().IndexOf(sStr);
+        public static int IndexOf(StringAsArray str, string sStr) => str.ToString().IndexOf(sStr);
 
+        public static int IndexOf(StringAsArray str, char sChar) => str.ToString().IndexOf(sChar);
+
+        public static int Func1()
+        {
+            return 0;
         }
 
-        public static int IndexOf(StringAsArray str, char sChar) // поиск первого вхождения в массив символов символа (char)
+        public static int Func2()
         {
-            return str.ToString().IndexOf(sChar);
+            return 0;
         }
-
-        // 2-3 функции, которые я бы добавил к существующему функционалу строк C#?????
-        // в мой класс или в String??
 
         // * функционал индексатора indexer
 
