@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 namespace Program
 {
     /*
@@ -62,6 +61,10 @@ namespace Program
         {
             return Math.PI * outRadius * outRadius;
         }
+        public double CircleLength()
+        {
+            return 2 * Math.PI * outRadius + 2 * Math.PI * inRadius;
+        }
     }
     public class Ring : Circle
     {
@@ -73,7 +76,7 @@ namespace Program
             this.inRadius = inRadius;
         }
 
-        public double CircleLength()
+        public double CircleFullLength()
         {
             return 2 * Math.PI * outRadius + 2 * Math.PI * inRadius;
         }
@@ -98,7 +101,7 @@ namespace Program
             this.Width = Width;
         }
 
-        public double RectangleSquare()
+        public double RectSquare()
         {
             return Width*Width;
         }
@@ -114,7 +117,7 @@ namespace Program
             this.Height = Height;
         }
 
-        public double RectangleSquare()
+        public double SSquare()
         {
             return Width * Height;
         }
