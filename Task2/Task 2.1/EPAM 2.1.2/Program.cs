@@ -32,19 +32,19 @@ namespace Program
         public int Y { get; set; }
         public int inRadius { get; set; }
         public int outRadius { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int side1 { get; set; }
+        public int side2 { get; set; }
 
     }
 
     public class Line : Figure
     {
-        public Line(int X, int Y, int Width, int Height)
+        public Line(int X, int Y, int side1, int side2)
         {
             this.X = X;
             this.Y = Y;
-            this.Width = Width;
-            this.Height = Height;
+            this.side1 = side1;
+            this.side2 = side2;
         }
     }
 
@@ -94,32 +94,32 @@ namespace Program
 
     public class Square : Figure
     {
-        public Square(int X, int Y, int Width)
+        public Square(int X, int Y, int side1)
         {
             this.X = X;
             this.Y = Y;
-            this.Width = Width;
+            this.side1 = side1;
         }
 
         public double RectSquare()
         {
-            return Width*Width;
+            return side1*side1;
         }
     }
 
     public class Rectangle : Square
     {
-        public Rectangle(int X, int Y, int Width, int Height) : base(X, Y, Width)
+        public Rectangle(int X, int Y, int side1, int side2) : base(X, Y, side1)
         {
             this.X = X;
             this.Y = Y;
-            this.Width = Width;
-            this.Height = Height;
+            this.side1 = side1;
+            this.side2 = side2;
         }
 
         public double SSquare()
         {
-            return Width * Height;
+            return side1 * side2;
         }
     }
 
@@ -136,11 +136,11 @@ namespace Program
                     else if (item.GetType() == typeof(Circle))
                         Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}", typeof(Circle), item.X, item.Y, item.outRadius);
                     else if (item.GetType() == typeof(Rectangle))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; Height = {3}, Width = {4}", typeof(Rectangle), item.X, item.Y, item.Height, item.Width);
+                        Console.WriteLine("{0} : Center: {1}, {2} ; Height = {3}, Width = {4}", typeof(Rectangle), item.X, item.Y, item.side2, item.side1);
                     else if (item.GetType() == typeof(Square))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; Side = {3}", typeof(Square), item.X, item.Y, item.Height);
+                        Console.WriteLine("{0} : Center: {1}, {2} ; Side = {3}", typeof(Square), item.X, item.Y, item.side2);
                     else if (item.GetType() == typeof(Line))
-                        Console.WriteLine("{0} : First point: {1}, {2} ; Second point = {3}, {4}", typeof(Line), item.X, item.Y, item.Width, item.Height);
+                        Console.WriteLine("{0} : First point: {1}, {2} ; Second point = {3}, {4}", typeof(Line), item.X, item.Y, item.side1, item.side2);
                     else if (item.GetType() == typeof(Сircumference))
                         Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}", typeof(Circle), item.X, item.Y, item.outRadius);
                 }
@@ -215,25 +215,25 @@ namespace Program
                                 Console.WriteLine("Enter: center, sides - 'x, y, width, heigth'");
                                 x = GetConsoleIntValue();
                                 y = GetConsoleIntValue();
-                                int width = GetConsoleIntValue();
-                                int height = GetConsoleIntValue();
-                                listOfFigures.Add(new Rectangle(x, y, width, height));
+                                int side1 = GetConsoleIntValue();
+                                int side2 = GetConsoleIntValue();
+                                listOfFigures.Add(new Rectangle(x, y, side1, side2));
                                 break;
 
                             case "s":
                                 Console.WriteLine("Enter: center, side - 'x, y, side'");
                                 x = GetConsoleIntValue();
                                 y = GetConsoleIntValue();
-                                width = GetConsoleIntValue();
-                                listOfFigures.Add(new Square(x, y, width));
+                                side1 = GetConsoleIntValue();
+                                listOfFigures.Add(new Square(x, y, side1));
                                 break;
                             case "l":
                                 Console.WriteLine("Enter 2 points: (x,y), (x,y)");
                                 x = GetConsoleIntValue();
                                 y = GetConsoleIntValue();
-                                width = GetConsoleIntValue();
-                                height = GetConsoleIntValue();
-                                listOfFigures.Add(new Line(x, y, width, height));
+                                side1 = GetConsoleIntValue();
+                                side2 = GetConsoleIntValue();
+                                listOfFigures.Add(new Line(x, y, side1, side2));
                                 break;
 
                             default:
