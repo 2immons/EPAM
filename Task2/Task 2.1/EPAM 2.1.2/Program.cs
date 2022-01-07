@@ -40,33 +40,12 @@ namespace Program
 
     public class Line : Figure
     {
-        public Line(int X, int Y, int Width, int Heigth)
+        public Line(int X, int Y, int Width, int Height)
         {
             this.X = X;
             this.Y = Y;
             this.Width = Width;
-            this.Height = Heigth;
-        }
-    }
-
-    public class Ring : Figure
-    {
-        public Ring(int X, int Y, int outRadius, int inRadius)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.outRadius = outRadius;
-            this.inRadius = inRadius;
-        }
-    }
-
-    public class Сircumference : Figure
-    {
-        public Сircumference(int X, int Y, int outRadius)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.outRadius = outRadius;
+            this.Height = Height;
         }
     }
 
@@ -78,16 +57,35 @@ namespace Program
             this.Y = Y;
             this.outRadius = outRadius;
         }
-    }
 
-    public class Rectangle : Figure
+        public double CircleSquare()
+        {
+            return Math.PI * outRadius * outRadius;
+        }
+    }
+    public class Ring : Circle
     {
-        public Rectangle(int X, int Y, int Width, int Heigth)
+        public Ring(int X, int Y, int outRadius, int inRadius) : base (X, Y, outRadius)
         {
             this.X = X;
             this.Y = Y;
-            this.Width = Width;
-            this.Height = Heigth;
+            this.outRadius = outRadius;
+            this.inRadius = inRadius;
+        }
+
+        public double CircleLength()
+        {
+            return 2 * Math.PI * outRadius + 2 * Math.PI * inRadius;
+        }
+    }
+
+    public class Сircumference : Circle
+    {
+        public Сircumference(int X, int Y, int outRadius) : base(X, Y, outRadius)
+        {
+            this.X = X;
+            this.Y = Y;
+            this.outRadius = outRadius;
         }
     }
 
@@ -98,6 +96,27 @@ namespace Program
             this.X = X;
             this.Y = Y;
             this.Width = Width;
+        }
+
+        public double RectangleSquare()
+        {
+            return Width*Width;
+        }
+    }
+
+    public class Rectangle : Square
+    {
+        public Rectangle(int X, int Y, int Width, int Height) : base(X, Y, Width)
+        {
+            this.X = X;
+            this.Y = Y;
+            this.Width = Width;
+            this.Height = Height;
+        }
+
+        public double RectangleSquare()
+        {
+            return Width * Height;
         }
     }
 
