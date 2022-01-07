@@ -17,11 +17,17 @@
         */
 
         public char[] StringArray { get; set; }
+        
+        private char[] arr = new char[30];
+        public char this[int i]
+        {
+            get { return arr[i]; }
+            set { arr[i] = value; }
+        }
 
         public StringAsArray(string str) // конвертация в массив символов
         {
             StringArray = str.ToCharArray();
-
         }
 
         public static string ToString(StringAsArray str) // конвертация из массива символов в строку
@@ -85,21 +91,30 @@
 
         public static int IndexOf(StringAsArray str, char sChar) => str.ToString().IndexOf(sChar);
 
-        public static int Func1()
+
+        // добавочные к функционалу функции:
+        public static bool IsPalindrome(StringAsArray str)
         {
-            return 0;
+            for (int i = 0; i < Length(str) / 2; i++)
+
+                if (str.StringArray[i] != str.StringArray[Length(str) - i - 1])
+                    return false;
+            return true;
         }
 
-        public static int Func2()
+        public static StringAsArray Multiplication(StringAsArray str, int index)
         {
-            return 0;
+            string resultStr = string.Empty;
+            for (int i = 0; i < Length(str); i++)
+            {
+                for (int j = 0; j < index; j++)
+                {
+                    resultStr += str.StringArray[i];
+                }
+            }
+            StringAsArray result = new StringAsArray(resultStr);
+            return result;
         }
-
-        // * функционал индексатора indexer
-
-        // ** создать из своей сборки переносимую библиотеку (DLL). 
-        // осмысленно назвать её, а также namespace и сам класс.
-        // создать другой проект, где будем использовать созданный StringAsArray класс
 
     }
 }

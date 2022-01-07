@@ -10,11 +10,11 @@ namespace Task
             Console.WriteLine("String1 + string2 = {0}", str1 + str2);
 
             if (str1 < str2)
-                Console.WriteLine("String1 < string2");
+                Console.WriteLine("string1 < string2");
             else if (str1 > str2)
-                Console.WriteLine("String1 > string2");
+                Console.WriteLine("string1 > string2");
             else if (str1 == str2)
-                Console.WriteLine("String1 = string2");
+                Console.WriteLine("string1 = string2");
 
             Console.Write("Enter string to search in string1: ");
             string strForSearch = Console.ReadLine();
@@ -36,6 +36,19 @@ namespace Task
             Console.WriteLine("Now we convert 'StringAsArray' object to normal 'C#-String' object, using str2 as an example:");
             string resultString = str2.ToString();
             Console.WriteLine(resultString);
+
+            Console.Write("Enter new value for str1[0] element: ");
+            char change = char.Parse(Console.ReadLine());
+            str1.StringArray[0] = change;
+            Console.WriteLine("str1: {0}", str1);
+            Console.WriteLine("str1[0] element: {0}", str1.StringArray[0]);
+
+            if (StringAsArray.IsPalindrome(str1))
+                Console.WriteLine("str1 is palindrome");
+            else
+                Console.WriteLine("str1 is not palindrome");
+
+            Console.WriteLine("str1 elements * 2: {0}", StringAsArray.Multiplication(str1, 2));
         }
 
         static void Main()

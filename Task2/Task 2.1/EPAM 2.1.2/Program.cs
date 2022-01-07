@@ -133,7 +133,7 @@ namespace Program
             return index;
         }
 
-        static int GetConsoleIntValue()
+        static int GetConsoleIntValue() // ввод int с консоли с провркой
         {
             string value = Console.ReadLine();
 
