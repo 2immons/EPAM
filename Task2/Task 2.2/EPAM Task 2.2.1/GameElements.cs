@@ -7,6 +7,11 @@
         public char Symbol { get; set; }
     }
     abstract class Object : GameElements { }
+    abstract class Character : GameElements
+    {
+        abstract public void Move();
+
+    }
 
     class Obstacle : Object
     {
@@ -35,12 +40,6 @@
             this.Y = Y;
             Symbol = '+';
         }
-    }
-
-    abstract class Character : GameElements
-    {
-        abstract public void Move();
-
     }
 
     class Player : Character
@@ -84,8 +83,9 @@
 
         override public void Move()
         {
-            this.X += KeyPressCheck()[0];
-            this.Y += KeyPressCheck()[1];
+            int[] coordinates = KeyPressCheck();
+            this.X += coordinates[0];
+            this.Y += coordinates[1];
         }
     }
 

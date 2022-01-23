@@ -1,5 +1,10 @@
 ﻿namespace Game
 {
+
+    // Цель игры - собрать бонусы ($ на карте), постоянно пополняя свое HP (+ на карте)
+    // и поддерживая HP > 0, иначе проигрыш.
+    // Проиграть также можно, если выйти за карту/умереть от рук монстра (Z/W на карте) или же удариться о препятствие (| на карте)
+
     class Game
     {
         private const int mapWidth = 30;
@@ -69,7 +74,7 @@
             else
             {
                 Console.Clear();
-                Console.WriteLine("You collect all bonuses!\nYou won!");
+                Console.WriteLine("You collected all bonuses!\nYou won!");
                 return false;
             }
         }
@@ -134,6 +139,8 @@
 
             List<Character> characters = new()
             {
+                new Zombie(rnd.Next(1, 28), rnd.Next(1, 28)),
+                new Wolf(rnd.Next(1, 28), rnd.Next(1, 28)),
                 new Zombie(rnd.Next(1, 28), rnd.Next(1, 28)),
                 new Wolf(rnd.Next(1, 28), rnd.Next(1, 28))
             };
