@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Program
+namespace EPAM_2._1._2
 {
     /*
     
@@ -26,102 +26,6 @@ namespace Program
     «ВЫХОД» появляется опция «СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ», требующая заново ввести имя.
     
     */
-    public class Figure
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int inRadius { get; set; }
-        public int outRadius { get; set; }
-        public int side1 { get; set; }
-        public int side2 { get; set; }
-
-    }
-
-    public class Line : Figure
-    {
-        public Line(int X, int Y, int side1, int side2)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.side1 = side1;
-            this.side2 = side2;
-        }
-    }
-
-    public class Circle : Figure
-    {
-        public Circle(int X, int Y, int outRadius)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.outRadius = outRadius;
-        }
-
-        public double CircleSquare()
-        {
-            return Math.PI * outRadius * outRadius;
-        }
-        public double CircleLength()
-        {
-            return 2 * Math.PI * outRadius + 2 * Math.PI * inRadius;
-        }
-    }
-    public class Ring : Circle
-    {
-        public Ring(int X, int Y, int outRadius, int inRadius) : base (X, Y, outRadius)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.outRadius = outRadius;
-            this.inRadius = inRadius;
-        }
-
-        public double CircleFullLength()
-        {
-            return 2 * Math.PI * outRadius + 2 * Math.PI * inRadius;
-        }
-    }
-
-    public class Сircumference : Circle
-    {
-        public Сircumference(int X, int Y, int outRadius) : base(X, Y, outRadius)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.outRadius = outRadius;
-        }
-    }
-
-    public class Square : Figure
-    {
-        public Square(int X, int Y, int side1)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.side1 = side1;
-        }
-
-        public double RectSquare()
-        {
-            return side1*side1;
-        }
-    }
-
-    public class Rectangle : Square
-    {
-        public Rectangle(int X, int Y, int side1, int side2) : base(X, Y, side1)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.side1 = side1;
-            this.side2 = side2;
-        }
-
-        public double SSquare()
-        {
-            return side1 * side2;
-        }
-    }
 
 
     public class Program
@@ -164,113 +68,118 @@ namespace Program
             return 0;
         }
 
+        static string GetAccountName()
+        {
+            Console.Write("Etner account name: ");
+            string name = Console.ReadLine();
+            return name;
+        }
+
         static void Main()
         {
             List<Figure> listOfFigures = new List<Figure>();
 
-            Console.Write("Etner name: ");
-            string name = Console.ReadLine();
+            string name = GetAccountName();
             if (name == "0" || name.ToLower() == "turn off")
             {
                 Console.WriteLine("Turning off...");
                 return;
             }
-            else
+            
+            int index = PrintWindow(name);
+            while (true)
             {
-                int index = PrintWindow(name);
-                while (true)
+                if (index == 1)
                 {
-                    if (index == 1)
+                    Console.Write("Enter Ring (RI), Circle (C), Сircumference (CF), Rectangle (RT), Square (S), Line (L): ");
+                    string figureType = Console.ReadLine().ToLower();
+                    switch (figureType)
                     {
-                        Console.Write("Enter Ring (RI), Circle (C), Сircumference (CF), Rectangle (RT), Square (S), Line (L): ");
-                        string function = Console.ReadLine().ToLower();
-                        switch (function)
-                        {
-                            case "ri":
-                                Console.WriteLine("Enter: center, radius - 'x, y, in radius, out radius'");
-                                int x = GetConsoleIntValue();
-                                int y = GetConsoleIntValue();
-                                int outRadius = GetConsoleIntValue();
-                                int inRadius = GetConsoleIntValue();
-                                listOfFigures.Add(new Ring(x, y, outRadius, inRadius));
-                                break;
+                        case "ri":
+                            Console.WriteLine("Enter: center, radius - 'x, y, in radius, out radius'");
+                            int x = GetConsoleIntValue();
+                            int y = GetConsoleIntValue();
+                            int outRadius = GetConsoleIntValue();
+                            int inRadius = GetConsoleIntValue();
+                            listOfFigures.Add(new Ring(x, y, outRadius, inRadius));
+                            break;
 
-                            case "c":
-                                Console.WriteLine("Enter: center, radius - 'x, y, radius'");
-                                x = GetConsoleIntValue();
-                                y = GetConsoleIntValue();
-                                outRadius = GetConsoleIntValue();
-                                listOfFigures.Add(new Circle(x, y, outRadius));
-                                break;
+                        case "c":
+                            Console.WriteLine("Enter: center, radius - 'x, y, radius'");
+                            x = GetConsoleIntValue();
+                            y = GetConsoleIntValue();
+                            outRadius = GetConsoleIntValue();
+                            listOfFigures.Add(new Circle(x, y, outRadius));
+                            break;
 
-                            case "cf":
-                                Console.WriteLine("Enter: center, radius - 'x, y, radius'");
-                                x = GetConsoleIntValue();
-                                y = GetConsoleIntValue();
-                                outRadius = GetConsoleIntValue();
-                                listOfFigures.Add(new Сircumference(x, y, outRadius));
-                                break;
+                        case "cf":
+                            Console.WriteLine("Enter: center, radius - 'x, y, radius'");
+                            x = GetConsoleIntValue();
+                            y = GetConsoleIntValue();
+                            outRadius = GetConsoleIntValue();
+                            listOfFigures.Add(new Сircumference(x, y, outRadius));
+                            break;
 
-                            case "rt":
-                                Console.WriteLine("Enter: center, sides - 'x, y, width, heigth'");
-                                x = GetConsoleIntValue();
-                                y = GetConsoleIntValue();
-                                int side1 = GetConsoleIntValue();
-                                int side2 = GetConsoleIntValue();
-                                listOfFigures.Add(new Rectangle(x, y, side1, side2));
-                                break;
+                        case "rt":
+                            Console.WriteLine("Enter: center, sides - 'x, y, width, heigth'");
+                            x = GetConsoleIntValue();
+                            y = GetConsoleIntValue();
+                            int side1 = GetConsoleIntValue();
+                            int side2 = GetConsoleIntValue();
+                            listOfFigures.Add(new Rectangle(x, y, side1, side2));
+                            break;
 
-                            case "s":
-                                Console.WriteLine("Enter: center, side - 'x, y, side'");
-                                x = GetConsoleIntValue();
-                                y = GetConsoleIntValue();
-                                side1 = GetConsoleIntValue();
-                                listOfFigures.Add(new Square(x, y, side1));
-                                break;
-                            case "l":
-                                Console.WriteLine("Enter 2 points: (x,y), (x,y)");
-                                x = GetConsoleIntValue();
-                                y = GetConsoleIntValue();
-                                side1 = GetConsoleIntValue();
-                                side2 = GetConsoleIntValue();
-                                listOfFigures.Add(new Line(x, y, side1, side2));
-                                break;
+                        case "s":
+                            Console.WriteLine("Enter: center, side - 'x, y, side'");
+                            x = GetConsoleIntValue();
+                            y = GetConsoleIntValue();
+                            side1 = GetConsoleIntValue();
+                            listOfFigures.Add(new Square(x, y, side1));
+                            break;
 
-                            default:
-                                Console.WriteLine("Wrong input...");
-                                break;
-                        }
+                        case "l":
+                            Console.WriteLine("Enter 2 points: (x,y), (x,y)");
+                            x = GetConsoleIntValue();
+                            y = GetConsoleIntValue();
+                            side1 = GetConsoleIntValue();
+                            side2 = GetConsoleIntValue();
+                            listOfFigures.Add(new Line(x, y, side1, side2));
+                            break;
+
+                        default:
+                            Console.WriteLine("Wrong input...");
+                            break;
                     }
-
-                    else if (index == 2)
-                    {
-                        Info(listOfFigures);
-                    }
-
-                    else if (index == 3)
-                    {
-                        if (listOfFigures.Count > 0)
-                        {
-                            listOfFigures.Clear();
-                            Console.WriteLine("All figures were deleted");
-                        }
-                        else
-                            Console.WriteLine("Nothing to delete...");
-                    }
-
-                    else if (index == 4)
-                    {
-                        Console.WriteLine("Enter your name:");
-                        name = Console.ReadLine();
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("Wrong input...");
-                    }
-
-                    index = PrintWindow(name);
                 }
+
+                else if (index == 2)
+                {
+                    Info(listOfFigures);
+                }
+
+                else if (index == 3)
+                {
+                    if (listOfFigures.Count > 0)
+                    {
+                        listOfFigures.Clear();
+                        Console.WriteLine("All figures were deleted");
+                    }
+                    else
+                        Console.WriteLine("Nothing to delete...");
+                }
+
+                else if (index == 4)
+                {
+                    Console.WriteLine("Enter your name:");
+                    name = Console.ReadLine();
+                }
+
+                else
+                {
+                    Console.WriteLine("Wrong input...");
+                }
+
+                index = PrintWindow(name);
             }
         }
     }
