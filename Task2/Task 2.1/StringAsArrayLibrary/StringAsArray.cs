@@ -25,7 +25,7 @@
             set { arr[i] = value; }
         }
 
-        public StringAsArray(string str) // конвертация в массив символов
+        public StringAsArray(string str) //конвертация в массив символов
         {
             StringArray = str.ToCharArray();
         }

@@ -99,7 +99,7 @@
         }
         override public void Move()
         {
-            // алгоритм движения зомби
+            // алгоритм зомби
             if (this.X > 1 && this.Y > 1 && this.X < 28 && this.Y < 28)
             {
                 this.X -= 1;
@@ -116,7 +116,7 @@
         }
         override public void Move()
         {
-            // алгоритм движения волка
+            // алгоритм волка
             if (this.X > 1 && this.Y > 1 && this.X < 28 && this.Y < 28)
             {
                 this.X += 1;

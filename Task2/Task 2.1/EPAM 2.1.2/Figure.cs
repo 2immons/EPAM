@@ -90,7 +90,6 @@
             this.side1 = side1;
             this.side2 = side2;
         }
-
         public double SSquare()
         {
             return side1 * side2;

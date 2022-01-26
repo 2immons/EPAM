@@ -44,7 +44,7 @@
                 if (item.X == player.X && item.Y == player.Y)
                 {
                     Console.Clear();
-                    Console.WriteLine("You was eaten by monster\nGame over!");
+                    Console.WriteLine("You were eaten by a monster!\nGame over!");
                     return false;
                 }
             }
@@ -74,7 +74,7 @@
             else
             {
                 Console.Clear();
-                Console.WriteLine("You collected all bonuses!\nYou won!");
+                Console.WriteLine("You have collected all the bonuses!\nYou won!");
                 return false;
             }
         }
@@ -115,8 +115,6 @@
 
                 }
             }
-
-            objects.RemoveAll(item => item.X == 35);
 
             foreach (var item in characters)
                 field[item.X, item.Y] = item.Symbol;

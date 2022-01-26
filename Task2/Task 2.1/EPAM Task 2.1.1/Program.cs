@@ -50,7 +50,6 @@ namespace Task
 
             Console.WriteLine("str1 elements * 2: {0}", StringAsArray.Multiplication(str1, 2));
         }
-
         static void Main()
         {
             Console.Write("Enter string1 = ");

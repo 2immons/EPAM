@@ -173,7 +173,6 @@ namespace EPAM_2._1._2
                     Console.WriteLine("Enter your name:");
                     name = Console.ReadLine();
                 }
-
                 else
                 {
                     Console.WriteLine("Wrong input...");
