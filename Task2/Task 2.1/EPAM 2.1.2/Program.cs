@@ -1,5 +1,4 @@
-﻿using System;
-namespace EPAM_2._1._2
+﻿namespace EPAM_2._1._2
 {
     /*
     
@@ -8,7 +7,7 @@ namespace EPAM_2._1._2
     
     Кроме этого, создайте класс, описывающий кольцо, заданное координатами центра, внешним и внутренним радиусами, 
     а также свойствами, позволяющими узнать площадь кольца и суммарную длину внешней и внутренней окружностей.
-    
+
     Подумайте над взаимосвязью этих сущностей, возможной иерархией. Задача – максимально сократить повтор кода в рамках задания.
     
     По аналогии опишите классы других фигур. На их основе реализуйте собственный графический редактор,
@@ -30,132 +29,118 @@ namespace EPAM_2._1._2
 
     public class Program
     {
-        static void Info(List<Figure> listOfFigures)
-        {
-            if (listOfFigures.Count > 0)
-                foreach (var item in listOfFigures)
-                {
-                    if (item.GetType() == typeof(Ring))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}, InRadius = {4}", typeof(Ring), item.X, item.Y, item.outRadius, item.inRadius);
-                    else if (item.GetType() == typeof(Circle))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}", typeof(Circle), item.X, item.Y, item.outRadius);
-                    else if (item.GetType() == typeof(Rectangle))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; Height = {3}, Width = {4}", typeof(Rectangle), item.X, item.Y, item.side2, item.side1);
-                    else if (item.GetType() == typeof(Square))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; Side = {3}", typeof(Square), item.X, item.Y, item.side2);
-                    else if (item.GetType() == typeof(Line))
-                        Console.WriteLine("{0} : First point: {1}, {2} ; Second point = {3}, {4}", typeof(Line), item.X, item.Y, item.side1, item.side2);
-                    else if (item.GetType() == typeof(Сircumference))
-                        Console.WriteLine("{0} : Center: {1}, {2} ; OutR = {3}", typeof(Circle), item.X, item.Y, item.outRadius);
-                }
-            else Console.WriteLine("No figures added...");
-        }
-
-        static int PrintWindow(string name)
-        {
-            Console.WriteLine("{0}, enter:", name);
-            Console.WriteLine("1) Add\n2) Print a list of figures\n3) Delete all figures\n4) Exit");
-            int index = GetConsoleIntValue();
-            return index;
-        }
-
-        static int GetConsoleIntValue() // ввод int с консоли с провркой
+        static int GetConsoleIntValue()
         {
             string value = Console.ReadLine();
-
             if (Int32.TryParse(value, out int result))
                 return result;
             return 0;
         }
 
+        static int PrintMenu(string name)
+        {
+            Console.WriteLine("{0}, enter:", name);
+            Console.WriteLine("1) Create figure\n2) Print all figures\n3) Delete all figures\n4) Change user\n5) Turn off");
+            int index = GetConsoleIntValue();
+            return index;
+        }
+
+        static void CreateFigure(int figureType, List<Figure> listOfFigures)
+        {
+            switch (figureType)
+            {
+                case 1:
+                    Console.WriteLine("Square - Enter: x, y, side1:");
+                    int x = GetConsoleIntValue();
+                    int y = GetConsoleIntValue();
+                    int side1 = GetConsoleIntValue();
+                    listOfFigures.Add(new Square(x, y, side1));
+                    break;
+                case 2:
+                    Console.WriteLine("Rectangle - Enter: x, y, side1, side2:");
+                    x = GetConsoleIntValue();
+                    y = GetConsoleIntValue();
+                    side1 = GetConsoleIntValue();
+                    int side2 = GetConsoleIntValue();
+                    listOfFigures.Add(new Rectangle(x, y, side1, side2));
+                    break;
+                case 3:
+                    Console.WriteLine("Line - Enter: x1, y1; x2, y2:");
+                    x = GetConsoleIntValue();
+                    y = GetConsoleIntValue();
+                    int x2 = GetConsoleIntValue();
+                    int y2 = GetConsoleIntValue();
+                    listOfFigures.Add(new Line(x, y, x2, y2));
+                    break;
+                case 4:
+                    Console.WriteLine("Circle - Enter: x, y, outer radius:");
+                    x = GetConsoleIntValue();
+                    y = GetConsoleIntValue();
+                    int outerRadius = GetConsoleIntValue();
+                    listOfFigures.Add(new Circle(x, y, outerRadius));
+                    break;
+                case 5:
+                    Console.WriteLine("Ring - Enter: x, y, inner radius, outer radius:");
+                    x = GetConsoleIntValue();
+                    y = GetConsoleIntValue();
+                    int innerRadius = GetConsoleIntValue();
+                    outerRadius = GetConsoleIntValue();
+                    listOfFigures.Add(new Ring(x, y, innerRadius, outerRadius));
+                    break;
+                case 6:
+                    Console.WriteLine("Triangle - Enter: x, y, side1, side2, side3:");
+                    x = GetConsoleIntValue();
+                    y = GetConsoleIntValue();
+                    side1 = GetConsoleIntValue();
+                    side2 = GetConsoleIntValue();
+                    int side3 = GetConsoleIntValue();
+                    listOfFigures.Add(new Triangle(x, y, side1, side2, side3));
+                    break;
+                default:
+                    Console.WriteLine("Wrong input...");
+                    break;
+            }
+        }
+
+        static void PrintAllFigures(List<Figure> listOfFigures)
+        {
+            if (listOfFigures.Count > 0)
+                foreach (var item in listOfFigures)
+                {
+                    item.GetInfo();
+                    Console.WriteLine();
+                }
+            else Console.WriteLine("No figures added...");
+        }
+
         static string GetAccountName()
         {
             Console.Write("Etner account name: ");
-            string name = Console.ReadLine();
-            return name;
+            string value = Console.ReadLine();
+            if (!String.IsNullOrEmpty(value)) 
+                return value;
+            return "Standart Username";
         }
 
         static void Main()
         {
-            List<Figure> listOfFigures = new List<Figure>();
+            List<Figure> listOfFigures = new();
 
             string name = GetAccountName();
-            if (name == "0" || name.ToLower() == "turn off")
-            {
-                Console.WriteLine("Turning off...");
-                return;
-            }
-            
-            int index = PrintWindow(name);
+
+            int index;
             while (true)
             {
+                index = PrintMenu(name);
                 if (index == 1)
                 {
-                    Console.Write("Enter Ring (RI), Circle (C), Сircumference (CF), Rectangle (RT), Square (S), Line (L): ");
-                    string figureType = Console.ReadLine().ToLower();
-                    switch (figureType)
-                    {
-                        case "ri":
-                            Console.WriteLine("Enter: center, radius - 'x, y, in radius, out radius'");
-                            int x = GetConsoleIntValue();
-                            int y = GetConsoleIntValue();
-                            int outRadius = GetConsoleIntValue();
-                            int inRadius = GetConsoleIntValue();
-                            listOfFigures.Add(new Ring(x, y, outRadius, inRadius));
-                            break;
-
-                        case "c":
-                            Console.WriteLine("Enter: center, radius - 'x, y, radius'");
-                            x = GetConsoleIntValue();
-                            y = GetConsoleIntValue();
-                            outRadius = GetConsoleIntValue();
-                            listOfFigures.Add(new Circle(x, y, outRadius));
-                            break;
-
-                        case "cf":
-                            Console.WriteLine("Enter: center, radius - 'x, y, radius'");
-                            x = GetConsoleIntValue();
-                            y = GetConsoleIntValue();
-                            outRadius = GetConsoleIntValue();
-                            listOfFigures.Add(new Сircumference(x, y, outRadius));
-                            break;
-
-                        case "rt":
-                            Console.WriteLine("Enter: center, sides - 'x, y, width, heigth'");
-                            x = GetConsoleIntValue();
-                            y = GetConsoleIntValue();
-                            int side1 = GetConsoleIntValue();
-                            int side2 = GetConsoleIntValue();
-                            listOfFigures.Add(new Rectangle(x, y, side1, side2));
-                            break;
-
-                        case "s":
-                            Console.WriteLine("Enter: center, side - 'x, y, side'");
-                            x = GetConsoleIntValue();
-                            y = GetConsoleIntValue();
-                            side1 = GetConsoleIntValue();
-                            listOfFigures.Add(new Square(x, y, side1));
-                            break;
-
-                        case "l":
-                            Console.WriteLine("Enter 2 points: (x,y), (x,y)");
-                            x = GetConsoleIntValue();
-                            y = GetConsoleIntValue();
-                            side1 = GetConsoleIntValue();
-                            side2 = GetConsoleIntValue();
-                            listOfFigures.Add(new Line(x, y, side1, side2));
-                            break;
-
-                        default:
-                            Console.WriteLine("Wrong input...");
-                            break;
-                    }
+                    Console.WriteLine("Choose:");
+                    Console.Write("1) Square, \n2) Rectangle, \n3) Line, \n4) Circle, \n5) Ring, \n6) Triangle\n");
+                    int figureType = GetConsoleIntValue();
+                    CreateFigure(figureType, listOfFigures);
                 }
 
-                else if (index == 2)
-                {
-                    Info(listOfFigures);
-                }
+                else if (index == 2) PrintAllFigures(listOfFigures);
 
                 else if (index == 3)
                 {
@@ -168,17 +153,9 @@ namespace EPAM_2._1._2
                         Console.WriteLine("Nothing to delete...");
                 }
 
-                else if (index == 4)
-                {
-                    Console.WriteLine("Enter your name:");
-                    name = Console.ReadLine();
-                }
-                else
-                {
-                    Console.WriteLine("Wrong input...");
-                }
-
-                index = PrintWindow(name);
+                else if (index == 4) name = GetAccountName();
+                else if (index == 5) return;
+                else Console.WriteLine($"Wrong input... Try again, {name}...");
             }
         }
     }
