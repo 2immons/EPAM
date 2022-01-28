@@ -1,29 +1,28 @@
-﻿namespace Game
+﻿namespace EPAM_Task_2._2._1
 {
 
-    // Цель игры - собрать бонусы ($ на карте), постоянно пополняя свое HP (+ на карте)
-    // и поддерживая HP > 0, иначе проигрыш.
+    // Цель игры - собрать бонусы ($ на карте), постоянно пополняя свои Adrenaline Points (+ на карте)
+    // и поддерживая Adrenaline Points > 0, иначе проигрыш.
     // Проиграть также можно, если выйти за карту/умереть от рук монстра (Z/W на карте) или же удариться о препятствие (| на карте)
 
     class Game
     {
-        private const int mapWidth = 30;
-        private const int mapHeigth = 30;
-
-        static void DrawField(char[,] field, Player player)
+        private static readonly List<Character> characters = new();
+        private static readonly List<MapObject> objects = new();
+        static void DrawField(GameField field, Player player)
         {
-            for (int i = 0; i < mapWidth; i++)
+            for (int i = 0; i < field.MapWidth; i++)
             {
-                for (int k = 0; k < mapHeigth; k++)
+                for (int k = 0; k < field.MapHeigth; k++)
                 {
-                    Console.Write(field[i, k]);
+                    Console.Write(field.gameMap[i,k]);
                 }
                 Console.WriteLine();
             }
             Console.WriteLine($"Adrenaline points = {player.AdrenalinePoints}");
         }
 
-        static bool CheckForLoseOrVictory(List<Character> characters, List<Object> objects, Player player)
+        static bool CheckForGameContinuation(Player player, GameField field)
         {
             if (player.AdrenalinePoints < 0)
             {
@@ -32,7 +31,7 @@
                 return false;
             }
 
-            if (player.X == 0 || player.X == mapWidth - 1 || player.Y == 0 || player.Y == mapHeigth - 1)
+            if (player.X == 0 || player.X == field.MapWidth - 1 || player.Y == 0 || player.Y == field.MapHeigth - 1)
             {
                 Console.Clear();
                 Console.WriteLine("You left the field\nGame over!");
@@ -53,8 +52,7 @@
             {
                 if (item.X == player.X && item.Y == player.Y)
                 {
-                    Type itemType = item.GetType();
-                    if (itemType.Equals(typeof(Obstacle)))
+                    if (item is Obstacle)
                     {
                         Console.Clear();
                         Console.WriteLine("You hit an obstacle!\nGame over!");
@@ -79,19 +77,19 @@
             }
         }
 
-        static char[,] MapInit(char[,] field, List<Character> characters, List<Object> objects, Player player)
+        static GameField MapInit(Player player, GameField field)
         {
-            for (int i = 0; i < mapWidth; i++)
+            for (int i = 0; i < field.MapWidth; i++)
             {
-                for (int k = 0; k < mapHeigth; k++)
+                for (int k = 0; k < field.MapHeigth; k++)
                 {
-                    if (i == 0 || i == mapWidth - 1 || k == 0 || k == mapHeigth - 1)
-                        field[i, k] = '|';
-                    else field[i, k] = ' ';
+                    if (i == 0 || i == field.MapWidth - 1 || k == 0 || k == field.MapHeigth - 1)
+                        field.gameMap[i, k] = field.BorderSign;
+                    else field.gameMap[i, k] = ' ';
                 }
             }
 
-            field[player.X, player.Y] = player.Symbol;
+            field.gameMap[player.X, player.Y] = player.Symbol;
             player.AdrenalinePoints -= 2;
 
             for (int i = objects.Count - 1; i >= 0; i--)
@@ -111,63 +109,73 @@
                 }
                 else
                 {
-                    field[objects[i].X, objects[i].Y] = objects[i].Symbol;
+                    field.gameMap[objects[i].X, objects[i].Y] = objects[i].Symbol;
 
                 }
             }
 
             foreach (var item in characters)
-                field[item.X, item.Y] = item.Symbol;
+                field.gameMap[item.X, item.Y] = item.Symbol;
 
             return field;
         }
 
-        static void CharacterMovements(List<Character> characters, Player player)
+        static void CharacterMovements(Player player, GameField field)
         {
-            player.Move();
+            player.Move(field);
             foreach (var item in characters)
-                item.Move();
+                item.Move(field);
+        }
+
+        static void CreateCharacters(GameField field)
+        {
+            Random rnd = new();
+            int MapMaxWidthPoint = field.MapWidth - field.BorderSize;
+            int MapMaxHeigthPoint = field.MapHeigth - field.BorderSize;
+
+            // добавление бонусов
+            int bonusesCount = 3;
+            for (int i = 0; i < bonusesCount; i++)
+                objects.Add(new Bonus(rnd.Next(field.BorderSize, MapMaxWidthPoint), rnd.Next(field.BorderSize, MapMaxHeigthPoint)));
+
+            // добавление Adrenaline Points на карту
+            int adrenalinePointsCount = 3;
+            for (int i = 0; i < adrenalinePointsCount; i++)
+                objects.Add(new AdrenalinePoint(rnd.Next(field.BorderSize, MapMaxWidthPoint), rnd.Next(field.BorderSize, MapMaxHeigthPoint)));
+
+            // добавление препятствий на карту
+            int obstacleCount = 3;
+            for (int i = 0; i < obstacleCount; i++)
+                objects.Add(new Obstacle(rnd.Next(field.BorderSize, MapMaxWidthPoint), rnd.Next(field.BorderSize, MapMaxHeigthPoint)));
+
+            // добавление враждебных персонажей на карту
+            int charactersCount = 2;
+            for (int i = 0; i < charactersCount; i++)
+            {
+                characters.Add(new Zombie(rnd.Next(field.BorderSize, MapMaxWidthPoint), rnd.Next(field.BorderSize, MapMaxHeigthPoint)));
+                characters.Add(new Wolf(rnd.Next(field.BorderSize, MapMaxWidthPoint), rnd.Next(field.BorderSize, MapMaxHeigthPoint)));
+            }
         }
 
         static void Main()
         {
-            Player player = new();
+            const int mapHeigth = 30;
+            const int mapWidth = 30;
+            const char borderSign = '|';
+            const int borderSize = 2;
 
-            Random rnd = new();
+            GameField field = new(mapHeigth, mapWidth, borderSign, borderSize);
 
-            List<Character> characters = new()
+            Player player = new(field.MapWidth / 2, field.MapHeigth/2); // задаем положение игрока примерно в центре карты
+
+            CreateCharacters(field);
+
+            DrawField(MapInit(player, field), player);
+            while (CheckForGameContinuation(player, field))
             {
-                new Zombie(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Wolf(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Zombie(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Wolf(rnd.Next(1, 28), rnd.Next(1, 28))
-            };
-
-            List<Object> objects = new()
-            {
-                new Bonus(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Bonus(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Bonus(rnd.Next(1, 28), rnd.Next(1, 28)),
-
-                new AdrenalinePoint(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new AdrenalinePoint(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new AdrenalinePoint(rnd.Next(1, 28), rnd.Next(1, 28)),
-
-                new Obstacle(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Obstacle(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Obstacle(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Obstacle(rnd.Next(1, 28), rnd.Next(1, 28)),
-                new Obstacle(rnd.Next(1, 28), rnd.Next(1, 28))
-            };
-
-            char[,] field = new char[mapWidth, mapHeigth];
-
-            DrawField(MapInit(field, characters, objects, player), player);
-            while (CheckForLoseOrVictory(characters, objects, player))
-            {
-                CharacterMovements(characters, player);
+                CharacterMovements(player, field);
                 Console.Clear();
-                DrawField(MapInit(field, characters, objects, player), player);
+                DrawField(MapInit(player, field), player);
             }
         }
     }

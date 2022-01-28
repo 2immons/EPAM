@@ -1,19 +1,19 @@
-﻿namespace Game
+﻿namespace EPAM_Task_2._2._1
 {
-    abstract class GameElements
+    abstract class GameElement
     {
         public int X { get; set; }
         public int Y { get; set; }
         public char Symbol { get; set; }
     }
-    abstract class Object : GameElements { }
-    abstract class Character : GameElements
+    abstract class MapObject : GameElement { }
+    abstract class Character : GameElement
     {
-        abstract public void Move();
+        abstract public void Move(GameField field);
 
     }
 
-    class Obstacle : Object
+    class Obstacle : MapObject
     {
         public Obstacle(int X, int Y)
         {
@@ -22,7 +22,7 @@
             Symbol = '|';
         }
     }
-    class Bonus : Object
+    class Bonus : MapObject
     {
         public Bonus(int X, int Y)
         {
@@ -32,7 +32,7 @@
         }
     }
 
-    class AdrenalinePoint : Object
+    class AdrenalinePoint : MapObject
     {
         public AdrenalinePoint(int X, int Y)
         {
@@ -45,47 +45,38 @@
     class Player : Character
     {
         public int AdrenalinePoints { get; set; }
-        public Player()
+        public Player(int x, int y)
         {
-            this.X = 15;
-            this.Y = 15;
+            this.X = x;
+            this.Y = y;
             this.Symbol = 'P';
             this.AdrenalinePoints = 100;
         }
 
-        public static int[] KeyPressCheck()
+        public override void Move(GameField field)
         {
-            int[] coordinates = new int[2];
             ConsoleKey Key = Console.ReadKey().Key;
             switch (Key)
             {
                 case ConsoleKey.A:
-                    coordinates[0] = 0;
-                    coordinates[1] = -1;
+                    X += 0;
+                    Y += -1;
                     break;
                 case ConsoleKey.D:
-                    coordinates[0] = 0;
-                    coordinates[1] = 1;
+                    X += 0;
+                    Y += 1;
                     break;
                 case ConsoleKey.W:
-                    coordinates[0] = -1;
-                    coordinates[1] = 0;
+                    X += -1;
+                    Y += 0;
                     break;
                 case ConsoleKey.S:
-                    coordinates[0] = 1;
-                    coordinates[1] = 0;
+                    X += 1;
+                    Y += 0;
                     break;
                 default:
                     break;
             }
-            return coordinates;
-        }
-
-        override public void Move()
-        {
-            int[] coordinates = KeyPressCheck();
-            this.X += coordinates[0];
-            this.Y += coordinates[1];
         }
     }
 
@@ -97,10 +88,10 @@
             this.Y = Y;
             this.Symbol = 'Z';
         }
-        override public void Move()
+        public override void Move(GameField field)
         {
             // алгоритм зомби
-            if (this.X > 1 && this.Y > 1 && this.X < 28 && this.Y < 28)
+            if (this.X > 1 && this.Y > 1 && this.X < field.MapWidth - field.BorderSize && this.Y < field.MapHeigth - field.BorderSize)
             {
                 this.X -= 1;
             }
@@ -114,10 +105,10 @@
             this.Y = Y;
             this.Symbol = 'W';
         }
-        override public void Move()
+        public override void Move(GameField field)
         {
             // алгоритм волка
-            if (this.X > 1 && this.Y > 1 && this.X < 28 && this.Y < 28)
+            if (this.X > 1 && this.Y > 1 && this.X < field.MapWidth - field.BorderSize && this.Y < field.MapHeigth - field.BorderSize)
             {
                 this.X += 1;
             }
