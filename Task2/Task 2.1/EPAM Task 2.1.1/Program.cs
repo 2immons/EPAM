@@ -8,7 +8,7 @@ namespace Task
         static void PrintTask(StringAsArray str1, StringAsArray str2)
         {
             Console.WriteLine("String1 + string2 = {0}", str1 + str2);
-
+            Console.WriteLine(str1.Length);
             if (str1 < str2)
                 Console.WriteLine("string1 < string2");
             else if (str1 > str2)
@@ -18,7 +18,7 @@ namespace Task
 
             Console.Write("Enter string to search in string1: ");
             string strForSearch = Console.ReadLine();
-            int index1 = StringAsArray.IndexOf(str1, strForSearch);
+            int index1 = str1.IndexOf(strForSearch);
             if (index1 < 0)
                 Console.WriteLine("There is no '{0}' string in string1...", strForSearch);
             else
@@ -26,7 +26,7 @@ namespace Task
 
             Console.Write("Enter char to search in string1: ");
             char.TryParse(Console.ReadLine(), out char charForSearch);
-            int index2 = StringAsArray.IndexOf(str1, charForSearch);
+            int index2 = str1.IndexOf(charForSearch);
             if (index2 < 0)
                 Console.WriteLine("There is no '{0}' char in string1...", charForSearch);
             else
@@ -39,25 +39,26 @@ namespace Task
 
             Console.Write("Enter new value for str1[0] element: ");
             char change = char.Parse(Console.ReadLine());
-            str1.StringArray[0] = change;
+            str1[0] = change;
             Console.WriteLine("str1: {0}", str1);
-            Console.WriteLine("str1[0] element: {0}", str1.StringArray[0]);
+            Console.WriteLine("str1[0] element: {0}", str1[0]);
 
-            if (StringAsArray.IsPalindrome(str1))
+            if (str1.IsPalindrome())
                 Console.WriteLine("str1 is palindrome");
             else
                 Console.WriteLine("str1 is not palindrome");
 
-            Console.WriteLine("str1 elements * 2: {0}", StringAsArray.Multiplication(str1, 2));
+            int index = 2;
+            Console.WriteLine($"str1 elements * {index}: {str1.Multiplication(index)}");
         }
         static void Main()
         {
             Console.Write("Enter string1 = ");
             string inputStr1 = Console.ReadLine();
-            StringAsArray str1 = new StringAsArray(inputStr1);
+            StringAsArray str1 = new(inputStr1);
             Console.Write("Enter string2 = ");
             string inputStr2 = Console.ReadLine();
-            StringAsArray str2 = new StringAsArray(inputStr2);
+            StringAsArray str2 = new(inputStr2);
 
             PrintTask(str1, str2);
         }

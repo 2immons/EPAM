@@ -16,50 +16,67 @@
 
         */
 
-        public char[] StringArray { get; set; }
-        
-        private char[] arr = new char[30];
+        public int Length => this.StringArray.Length;
+
+        private char[] StringArray = new char[30];
         public char this[int i]
         {
-            get { return arr[i]; }
-            set { arr[i] = value; }
+            get => StringArray[i]; 
+            set 
+            {
+                StringArray[i] = value; 
+            }
         }
 
-        public StringAsArray(string str) //конвертация в массив символов
+        public StringAsArray(string str)
         {
             StringArray = str.ToCharArray();
         }
 
-        public static string ToString(StringAsArray str) // конвертация из массива символов в строку
+        public StringAsArray()
         {
-            return str.StringArray.ToString();
+            StringArray = string.Empty.ToCharArray();
         }
 
-        public static int Length(StringAsArray str) // поиск длинны массива символов
+        public static string ToString(StringAsArray str)
         {
-            return str.StringArray.Length;
+            return str.ToString();
         }
 
         public static StringAsArray operator +(StringAsArray str1, StringAsArray str2) // перегрузка оператора +
         {
-            char[] temp = new char[Length(str1) + Length(str2)];
+            char[] temp = new char[str1.Length + str2.Length];
 
             int k;
-            for (k = 0; k < Length(str1); k++)
+            for (k = 0; k < str1.Length; k++)
             {
-                temp[k] = str1.StringArray[k];
+                temp[k] = str1[k];
             }
-            for (int j = k; j < k + Length(str2); j++)
+            for (int j = k; j < k + str2.Length; j++)
             {
-                temp[j] = str2.StringArray[j - Length(str1)];
+                temp[j] = str2[j - str1.Length];
             }
-            string vs = new string(temp);
+            string vs = new(temp);
+            return new StringAsArray(vs);
+        }
+
+        public static StringAsArray operator +(StringAsArray str1, char str2) // перегрузка оператора +
+        {
+            char[] temp = new char[str1.Length + 1];
+
+            int k;
+            for (k = 0; k < str1.Length; k++)
+            {
+                temp[k] = str1[k];
+            }
+            temp[k] = str2;
+            string vs = new(temp);
             return new StringAsArray(vs);
         }
 
         public static bool operator <(StringAsArray str1, StringAsArray str2) // перегрузка оператора <
         {
-            if (Length(str1) < Length(str2))
+            if (str1.Length < str2.Length)
             {
                 return true;
             }
@@ -67,9 +84,9 @@
                 return false;
         }
 
-        public static bool operator >(StringAsArray str1, StringAsArray str2) // перегрузка оператора <
+        public static bool operator >(StringAsArray str1, StringAsArray str2) // перегрузка оператора >
         {
-            if (Length(str1) > Length(str2))
+            if (str1.Length > str2.Length)
             {
                 return true;
             }
@@ -87,33 +104,32 @@
             return str;
         }
 
-        public static int IndexOf(StringAsArray str, string sStr) => str.ToString().IndexOf(sStr);
+        public int IndexOf(string sStr) => this.ToString().IndexOf(sStr);
 
-        public static int IndexOf(StringAsArray str, char sChar) => str.ToString().IndexOf(sChar);
+        public int IndexOf(char sChar) => this.ToString().IndexOf(sChar);
 
 
         // добавочные к функционалу функции:
-        public static bool IsPalindrome(StringAsArray str)
+        public bool IsPalindrome()
         {
-            for (int i = 0; i < Length(str) / 2; i++)
+            for (int i = 0; i < this.Length / 2; i++)
 
-                if (str.StringArray[i] != str.StringArray[Length(str) - i - 1])
+                if (this[i] != this[this.Length - i - 1])
                     return false;
             return true;
         }
 
-        public static StringAsArray Multiplication(StringAsArray str, int index)
+        public StringAsArray Multiplication(int index)
         {
-            string resultStr = string.Empty;
-            for (int i = 0; i < Length(str); i++)
+            StringAsArray resultStr = new();
+            for (int i = 0; i < this.Length; i++)
             {
                 for (int j = 0; j < index; j++)
                 {
-                    resultStr += str.StringArray[i];
+                    resultStr += this[i];
                 }
             }
-            StringAsArray result = new StringAsArray(resultStr);
-            return result;
+            return resultStr;
         }
 
     }
