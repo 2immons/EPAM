@@ -20,44 +20,59 @@
         {
             return s == "delete";
         }
+        private static void PrintList(List<string> list)
+        {
+            foreach (var item in list)
+                Console.Write($"{item} ");
+        }
+
         static void Main()
         {
-            Console.WriteLine("Введите N:");
-            int n = int.Parse(Console.ReadLine());
-            List<string> list = new();
-            Console.WriteLine("Введите имена людей:");
-            for (int i = 0; i < n; i++)
-                list.Add(Console.ReadLine());
+            List<string> rangeOfPlayers = new();
 
-            Console.WriteLine("\nСгенерирован круг людей. Начинаем вычеркивать каждого второго.");
+            Console.WriteLine("Введите N (количество людей):");
+            int n = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Введите имена людей:");
+            for (int i = 1; i <= n; i++)
+                rangeOfPlayers.Add(Console.ReadLine());
+
+            Console.WriteLine("Введите как будут вычеркиваться люди (число), например, '2' - каждый второй, '3' - каждый третий:");
+            int num = int.Parse(Console.ReadLine());
+
+            Console.Write("\nСгенерирован круг людей: ");
+            PrintList(rangeOfPlayers);
+            Console.Write($"\nНачинаем вычеркивать каждого {num}-го.");
+
+            Console.WriteLine();
 
             int roundCount = 1;
-            while (true)
+            int indexToDelete = num;
+
+            while (rangeOfPlayers.Count >= num)
             {
-                Console.Write($"Раунд {roundCount}. Вычеркнули: ");
-                for (int i = 0; i < list.Count; i++)
+                Console.Write($"Раунд №{roundCount}. Вычеркнули: ");
+                
+                while (indexToDelete <= rangeOfPlayers.Count)
                 {
-                    if (i % 2 != 0)
-                    {
-                        Console.Write($"{list[i]} ");
-                        list[i] = "delete";
-                    }
+                    Console.Write($"{rangeOfPlayers[indexToDelete-1]} ");
+                    rangeOfPlayers[indexToDelete-1] = "delete";
+                    indexToDelete += num;
                 }
+
+                rangeOfPlayers.RemoveAll(ForDelete);
+
+                Console.Write("\n\tОстались: ");
+                PrintList(rangeOfPlayers);
+
                 Console.WriteLine();
-                list.RemoveAll(ForDelete);
-                Console.Write($"После раунда {roundCount} круг выглядит так:\n\t");
-                if (list.Count == 1)
-                {
-                    Console.WriteLine($"Больше некого вычеркивать. {list[0]} - победитель!");
-                    break;
-                }
-                foreach (var item in list)
-                {
-                    Console.Write($"{item} ");
-                }
-                Console.WriteLine();
+
+                indexToDelete = num;
                 roundCount++;
             }
+
+            Console.Write($"В раунде №{roundCount} некого вычеркивать! Победители(-ль):\n\t");
+            PrintList(rangeOfPlayers);
         }
     }
 }
