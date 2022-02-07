@@ -16,13 +16,11 @@
         Невозможно вычеркнуть человека с номером больше, чем есть в кругу.
         */
 
-        private static bool ForDelete(String s)
+        private static bool MarkedForRemoval(String s) => s == "delete";
+
+        private static void PrintList(List<string> someList)
         {
-            return s == "delete";
-        }
-        private static void PrintList(List<string> list)
-        {
-            foreach (var item in list)
+            foreach (string item in someList)
                 Console.Write($"{item} ");
         }
 
@@ -38,36 +36,27 @@
                 rangeOfPlayers.Add(Console.ReadLine());
 
             Console.WriteLine("Введите как будут вычеркиваться люди (число), например, '2' - каждый второй, '3' - каждый третий:");
-            int num = int.Parse(Console.ReadLine());
+            int ruleNum = int.Parse(Console.ReadLine());
 
             Console.Write("\nСгенерирован круг людей: ");
             PrintList(rangeOfPlayers);
-            Console.Write($"\nНачинаем вычеркивать каждого {num}-го.");
-
-            Console.WriteLine();
+            Console.WriteLine($"\nНачинаем вычеркивать каждого {ruleNum}-го.\n");
 
             int roundCount = 1;
-            int indexToDelete = num;
 
-            while (rangeOfPlayers.Count >= num)
+            while (rangeOfPlayers.Count >= ruleNum)
             {
                 Console.Write($"Раунд №{roundCount}. Вычеркнули: ");
-                
-                while (indexToDelete <= rangeOfPlayers.Count)
+                for (int i = ruleNum; i <= rangeOfPlayers.Count; i += ruleNum)
                 {
-                    Console.Write($"{rangeOfPlayers[indexToDelete-1]} ");
-                    rangeOfPlayers[indexToDelete-1] = "delete";
-                    indexToDelete += num;
+                    Console.Write($"{rangeOfPlayers[i - 1]} ");
+                    rangeOfPlayers[i - 1] = "delete";
                 }
-
-                rangeOfPlayers.RemoveAll(ForDelete);
-
+                rangeOfPlayers.RemoveAll(MarkedForRemoval);
+                
                 Console.Write("\n\tОстались: ");
                 PrintList(rangeOfPlayers);
-
                 Console.WriteLine();
-
-                indexToDelete = num;
                 roundCount++;
             }
 
