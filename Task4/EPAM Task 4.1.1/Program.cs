@@ -1,8 +1,4 @@
-﻿using System.Text;
-
-namespace FileManagementSystem
-{
-    // Дана папка, которая является хранилищем файлов.
+﻿    // Дана папка, которая является хранилищем файлов.
 
     // Для всех текстовых файлов(*.txt), находящихся в этой папке или вложенных подпапках,
     // реализовать сохранение истории изменений с возможностью отката состояния к любому моменту.
@@ -20,121 +16,99 @@ namespace FileManagementSystem
     // Возможностью изменения файлов в момент, когда программа не находится в режиме
     // отслеживания изменений, пренебречь.
 
+namespace FileManagementSystem
+{
     public class FileManager
     {
-        static string directoryPath = "D:/GitHub/EPAM/Task4/EPAM Task 4.1.1";
-        string logFilePath = Path.Combine(directoryPath, "log.txt");
+        private readonly string reserveDirPath;
+        private readonly string inputDirPath;
+        public bool IsInputDirectoryExist { get => Directory.Exists(inputDirPath); }
 
-        public static int MakeChoise()
+        private string mainDirPath;
+        private string backupDirectory;
+
+        public FileManager(string inputDirPath)
         {
-            Console.WriteLine("Hello! You have 2 options:");
-            Console.WriteLine("1) Only read mode\n2) Backup mode");
+            if (inputDirPath[^1] != '\\')
+                inputDirPath += @"\";
+
+            this.inputDirPath = inputDirPath;
+
+            if (!IsInputDirectoryExist)
+                Console.WriteLine("\nIncorrect directory address: directory doesn't exist!\n");
+
+            else
+            {
+                reserveDirPath = Directory.GetDirectoryRoot(inputDirPath) + new DirectoryInfo(inputDirPath).Name + " (reserve)\\";
+                Directory.CreateDirectory(reserveDirPath);
+            }
+        }
+
+        public void CreateDirectoryCopy()
+        {
+            mainDirPath = inputDirPath;
+            backupDirectory = reserveDirPath + '\\' + DateTime.Now.ToString(@"dd-MM-yyyy HH-mm-s") + '\\';
+            Directory.CreateDirectory(backupDirectory);
+            
+            CopyFiles(mainDirPath, backupDirectory);
+            CopyDirectories(mainDirPath, backupDirectory);
+        }
+
+        public void CreateBackupDirectory()
+        {
+            mainDirPath = SelectRecoveryPoint();
+
+            Directory.Delete(inputDirPath, true);
+            Directory.CreateDirectory(inputDirPath);
+
+            if (mainDirPath == null)
+                return;
+
+            backupDirectory = inputDirPath;
+            CopyFiles(mainDirPath, backupDirectory);
+            CopyDirectories(mainDirPath, backupDirectory);
+            
+        }
+
+        private string SelectRecoveryPoint()
+        {
+            DirectoryInfo directoryInfo = new(reserveDirPath);
+            DirectoryInfo[] reverseDirectories = directoryInfo.GetDirectories();
+            Console.WriteLine("Select a recovery point:");
+            for (int i = 0; i < reverseDirectories.Length; i++)
+                Console.WriteLine($"{i + 1} : {reverseDirectories[i]}");
+
             int choiseIndex = int.Parse(Console.ReadLine());
-            return choiseIndex;
-        }
-
-        public void DirectoryCreator()
-        {
-            try
-            {
-                if (Directory.Exists(directoryPath))
-                {
-                    Console.WriteLine("That path exists already.");
-                    return;
-                }
-
-                DirectoryInfo di = Directory.CreateDirectory(directoryPath);
-                Console.WriteLine("The directory was created successfully at {0}.", Directory.GetCreationTime(directoryPath));
-
-                di.Delete();
-                Console.WriteLine("The directory was deleted successfully.");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The process failed: {0}", e.ToString());
-            }
-        }
-
-        public void BackupFileCreator()
-        {
-            string fileName = "testname"; // придумать генератор
-            string filePath = Path.Combine(directoryPath, fileName);
 
             try
             {
-                // Create the file, or overwrite if the file exists.
-                using (FileStream fs = File.Create(filePath))
-                {
-                    byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file.");
-                    // Add some information to the file.
-                    fs.Write(info, 0, info.Length);
-                }
-
-                // Open the stream and read it back.
-                using (StreamReader sr = File.OpenText(filePath))
-                {
-                    string s = "";
-                    while ((s = sr.ReadLine()) != null)
-                    {
-                        Console.WriteLine(s);
-                    }
-                }
+                return reverseDirectories[choiseIndex - 1].FullName + @"\";
             }
-
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine("\nIncorrect recovery point index!\n");
+                return SelectRecoveryPoint();
             }
         }
 
-        public void Logger()
+        private void CopyDirectories(string inputDirPathTemp, string backupDirectory)
         {
-            using (FileStream fs = File.Create(logFilePath))
+            DirectoryInfo directoryInfo = new(inputDirPathTemp);
+            foreach (DirectoryInfo directory in directoryInfo.GetDirectories())
             {
-                byte[] info = new UTF8Encoding(true).GetBytes("This is log file.");
-                // Add some information to the file.
-                fs.Write(info, 0, info.Length);
+                Directory.CreateDirectory(backupDirectory + directory + @"\");
+                CopyFiles(inputDirPathTemp + directory + @"\", this.backupDirectory);
+                CopyDirectories(inputDirPathTemp + directory + @"\", backupDirectory + directory + @"\");
             }
         }
 
-        // delegates: https://docs.microsoft.com/ru-ru/dotnet/csharp/programming-guide/delegates/using-delegates
-
-        public delegate void DelegateStartUp(int mode);
-        DelegateStartUp startUp = StartUp;
-
-        public static bool CheckForExitCommand()
+        private void CopyFiles(string directoryPath, string backupDirectory)
         {
-            if (Console.ReadLine().ToLower() == "exit")
-                return false;
-            else return true;
-        }
-        
-        private static void StartUp(int mode)
-        {
-            switch (mode)
-            {
-                case 1:
-                    Console.WriteLine("[READ MODE]");
-                    break;
-                case 2:
-                    Console.WriteLine("[BACKUP MODE]");
-                    break;
-                default:
-                    Console.WriteLine("Wrong input!");
-                    break;
-            }
-        }
+            DirectoryInfo directoryInfo = new(directoryPath);
+            string dirWithoutMain = directoryPath.Replace(mainDirPath, "");
 
-        static void Main()
-        {
-            while (CheckForExitCommand()) 
-            {
-                StartUp(MakeChoise());
-
-            }
+            foreach (var file in directoryInfo.GetFiles("*.txt"))
+                File.Copy(file.FullName, backupDirectory + dirWithoutMain + file.Name, true);
         }
-        
     }
-
-
 }
