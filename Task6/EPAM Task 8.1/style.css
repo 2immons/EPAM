@@ -1,0 +1,18 @@
+.menu{
+    background-color: rgb(255, 224, 128);
+    border: black solid 1px;
+    border-radius: 10px;
+    color: rgb(110, 21, 21);
+    width: 200px;
+    box-shadow: 5px 5px;
+    margin-left: 40px;
+}
+
+.menu__list{
+    color: rgb(126, 37, 37);
+    list-style: none;
+    padding-left: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    line-height: 22px;
+}

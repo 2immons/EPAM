@@ -1,0 +1,60 @@
+.registration-form{
+    margin: 40px;
+    width: 450px;
+    border: 2px rgb(0, 118, 179) solid;
+    font-size: medium;
+    background-color: rgb(1, 145, 208);
+}
+
+hr{
+    color: white;
+}
+
+.registration-main-text{
+    color: white;
+    font-size: 30px;
+    margin-left: 20px;
+    line-height: 5px;
+}
+
+.registration-texts{
+    color: white;
+    margin-left: 20px;
+}
+
+.info{
+    font-size: 18px;
+}
+
+.e-mail{
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.password{
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.e-mail__input{
+    width: 360px;
+}
+
+.password, .password-repeat{
+    display: inline-block;
+}
+
+.password-repeat{
+    margin-left: 10px;
+}
+
+.button{
+    margin-bottom: 20px;
+}
+
+.button__input{
+    border: none;
+    height: 30px;
+    background-color: rgb(255, 224, 128);
+    color: black;
+}
