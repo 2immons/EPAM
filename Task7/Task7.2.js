@@ -38,4 +38,6 @@ for(let i = 0 ; i < foundDigits.length-1; i++) {
         result /= foundDigits[i+1];
 }
 
+result = parseFloat(result).toFixed(2);
+
 console.log(result)
