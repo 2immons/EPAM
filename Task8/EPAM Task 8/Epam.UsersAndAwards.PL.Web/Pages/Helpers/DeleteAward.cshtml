@@ -1,0 +1,37 @@
+﻿@using Epam.UsersAndAwards.Dependencies;
+@using Epam.UsersAndAwards.BLL.Interfaces;
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+
+    Guid id = Guid.Empty;
+
+    IUsersLogic bllUsers = DependencyResolver.Instanse.UsersLogic;
+    IAwardsLogic bllAwards = DependencyResolver.Instanse.AwardsLogic;
+
+    if (IsPost)
+    {
+        id = Guid.Parse(Request["id"]);
+
+        bllAwards.RemoveAward(id);
+
+        Response.Redirect("~/");
+    }
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>List of awards:</label>
+        <ul class="list-group">
+            @{
+                foreach (var item in bllAwards.GetAwards())
+                {
+                    <li class="list-group-item">User @bllUsers.GetUser(item.UserId).Name has @item</li>
+                }
+            }
+        </ul>
+        <label>ID</label>
+        <input type="text" name="id" id="id" value="@id" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Delete award</button>
+</form>

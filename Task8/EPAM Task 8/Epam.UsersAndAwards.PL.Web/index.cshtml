@@ -1,0 +1,64 @@
+﻿@using Epam.UsersAndAwards.Dependencies;
+@using Epam.UsersAndAwards.BLL.Interfaces;
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+
+    IUsersLogic bllUsers = DependencyResolver.Instanse.UsersLogic;
+    IAwardsLogic bllAwards = DependencyResolver.Instanse.AwardsLogic;
+}
+
+<div class="users">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="/Pages/Helpers/CreateUser.cshtml">Add user</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Pages/Helpers/ReadUser.cshtml">See all users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Pages/Helpers/UpdateUser.cshtml">Edit user</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Pages/Helpers/DeleteUser.cshtml">Remove user</a>
+        </li>
+    </ul>
+</div>
+
+<div class="awards">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="/Pages/Helpers/CreateAward.cshtml">Add award to user</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Pages/Helpers/ReadAward.cshtml">See awards of all users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Pages/Helpers/UpdateAward.cshtml">Edit user's award</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Pages/Helpers/DeleteAward.cshtml">Remove award from user</a>
+        </li>
+    </ul>
+</div>
+
+@*<button id="create_user" type="submit" class="btn btn-primary">Add user</button>
+<button id="read_user" type="submit" class="btn btn-primary">See all users</button>
+<button id="update_user" type="submit" class="btn btn-primary">Edit user</button>
+<button id="delete_user" type="submit" class="btn btn-primary">Remove user</button>
+
+<script>
+
+        $('#create_user').click(function () {
+            location.href = "/Pages/Helpers/CreateUser.cshtml"
+        })
+        $('#read_user').click(function () {
+            location.href = "/Pages/Helpers/ReadUser.cshtml"
+        })
+        $('#update_user').click(function () {
+            location.href = "/Pages/Helpers/UpdateUser.cshtml"
+        })
+        $('#delete_user').click(function () {
+            location.href = "/Pages/Helpers/CreateUser.cshtml"
+        })
+</script>*@
