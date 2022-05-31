@@ -1,0 +1,32 @@
+﻿@using Epam.UsersAndAwards.Dependencies;
+@using Epam.UsersAndAwards.BLL.Interfaces;
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+
+    string username = string.Empty;
+    DateTime date = DateTime.Now;
+
+    IUsersLogic bllUsers = DependencyResolver.Instanse.UsersLogic;
+
+    if (IsPost)
+    {
+        username = Request["username"];
+        date = DateTime.Parse(Request["date"]);
+
+        bllUsers.AddUser(username, date);
+
+        Response.Redirect("~/");
+    }
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>User's name and surname</label>
+        <input type="text" name="username" id="userId" value="@username" class="form-control">
+        <label>Date of birth</label><br />
+        <input class="datafield" name="date" data-val="true" id="date" type="date" value="@date" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add user</button>
+</form>
+

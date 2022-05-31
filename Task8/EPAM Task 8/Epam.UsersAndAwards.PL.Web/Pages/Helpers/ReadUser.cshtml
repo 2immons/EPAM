@@ -1,0 +1,31 @@
+﻿@using Epam.UsersAndAwards.Dependencies;
+@using Epam.UsersAndAwards.BLL.Interfaces;
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+
+    string username = string.Empty;
+    DateTime date = DateTime.Now;
+
+    IUsersLogic bllUsers = DependencyResolver.Instanse.UsersLogic;
+
+    if (IsPost)
+    {
+        Response.Redirect("~/");
+    }
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>List of users:</label>
+        <ul class="list-group">
+            @{
+                foreach (var item in bllUsers.GetUsers())
+                {
+                    <li class="list-group-item">@item</li>
+                }
+            }
+        </ul>
+    <button type="submit" class="btn btn-primary">Return to main menu</button>
+</form>
+

@@ -1,0 +1,36 @@
+﻿@using Epam.UsersAndAwards.Dependencies;
+@using Epam.UsersAndAwards.BLL.Interfaces;
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+
+    Guid userId = Guid.Empty;
+
+    IUsersLogic bllUsers = DependencyResolver.Instanse.UsersLogic;
+
+    if (IsPost)
+    {
+        userId = Guid.Parse(Request["id"]);
+
+        bllUsers.RemoveUser(userId);
+
+        Response.Redirect("~/");
+    }
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>List of users:</label>
+        <ul class="list-group">
+            @{
+                foreach (var item in bllUsers.GetUsers())
+                {
+                    <li class="list-group-item">@item</li>
+                }
+             }
+        </ul>
+        <label>ID</label>
+        <input type="text" name="id" id="userId" value="@userId" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Delete user</button>
+</form>

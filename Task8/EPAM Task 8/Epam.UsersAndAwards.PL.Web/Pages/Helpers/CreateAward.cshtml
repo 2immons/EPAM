@@ -1,0 +1,42 @@
+﻿@using Epam.UsersAndAwards.Dependencies;
+@using Epam.UsersAndAwards.BLL.Interfaces;
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+
+    Guid userId = Guid.Empty;
+    string title = String.Empty;
+
+    IUsersLogic bllUsers = DependencyResolver.Instanse.UsersLogic;
+    IAwardsLogic bllAwards = DependencyResolver.Instanse.AwardsLogic;
+
+    if (IsPost)
+    {
+        userId = Guid.Parse(Request["userId"]);
+        title = Request["title"];
+
+        bllAwards.AddAward(userId, title);
+
+        Response.Redirect("~/");
+    }
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>List of users:</label>
+        <ul class="list-group">
+            @{
+                foreach (var item in bllUsers.GetUsers())
+                {
+                    <li class="list-group-item">@item</li>
+                }
+            }
+        </ul>
+        <label>User ID</label>
+        <input type="text" name="userId" id="userId" value="@userId" class="form-control" />
+        <label>Award title</label><br />
+        <input name="title" id="title" type="text" value="@title" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add award</button>
+</form>
+

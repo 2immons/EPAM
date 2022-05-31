@@ -1,0 +1,46 @@
+﻿@using Epam.UsersAndAwards.Dependencies;
+@using Epam.UsersAndAwards.BLL.Interfaces;
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+
+    Guid userId = Guid.Empty;
+    string username = string.Empty;
+    DateTime date = DateTime.Now;
+
+    IUsersLogic bllUsers = DependencyResolver.Instanse.UsersLogic;
+
+    if (IsPost)
+    {
+        userId = Guid.Parse(Request["id"]);
+        username = Request["username"];
+        date = DateTime.Parse(Request["date"]);
+
+        bllUsers.EditUser(userId, username, date);
+
+        Response.Redirect("~/");
+    }
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>List of users:</label>
+        <ul class="list-group">
+            @{
+                foreach (var item in bllUsers.GetUsers())
+                {
+                    <li class="list-group-item">@item</li>
+                }
+            }
+        </ul>
+        <label>ID</label>
+        <input type="text" name="id" id="userId" value="@userId" class="form-control">
+        <label>User's name and surname</label>
+        <input type="text" name="username" id="userId" value="@username" class="form-control">
+        <label>Date of birth</label>
+        <br />
+        <input class="datafield" name="date" data-val="true" id="date" type="date" value="@date" />
+    </div>
+    <button type="submit" class="btn btn-primary">Edit user</button>
+</form>
+
