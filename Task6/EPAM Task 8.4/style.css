@@ -1,0 +1,61 @@
+body{
+    background-color: rgb(74, 96, 118);
+}
+
+.container{
+    display: flex;
+    margin: auto;
+    background: white;
+    width: 800px;
+    height: 200px;
+    border-radius: 5px;
+    box-shadow: 0 0 30px black;
+    padding: 5px;
+    margin-top: 50px;
+}
+
+.line{
+    background-color: rgb(244, 244, 244);
+    width: 2px;
+    height: 150px;
+}
+
+.shared-hosting, .cloud-hosting, .dedicated-server, .line {
+    display: inline-block;
+    margin: auto;
+}
+
+.shared-hosting{
+    padding-left: 25px;
+}
+
+.dedicated-server{
+    padding-right: 25px;
+}
+
+.images, .button {
+    display: flex;
+    margin: auto;
+}
+
+.images{
+    height: 80px;
+    width: 80px;
+}
+
+.button{
+    background-color: rgb(245, 99, 46);
+    color: white;
+    border-style: none;
+    height: 25px;
+}
+
+.types-info {
+    color:rgb(245, 99, 46);
+    font-weight: bold;
+}
+
+.price-info{
+    color: black;
+    text-align: center;
+}
