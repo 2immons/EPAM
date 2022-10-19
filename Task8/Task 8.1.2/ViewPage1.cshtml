@@ -1,0 +1,94 @@
+﻿@using Task_8._1._2.Models;
+
+@{
+    Layout = "~/Pages/Layouts/_basicLayout.cshtml";
+
+    double A = 0;
+    double B = 0;
+
+    double? result = null;
+    int counter = 0;
+
+
+    if (IsPost)
+    {
+        if (double.TryParse(Request["A"], out A) && double.TryParse(Request["B"], out B))
+        {
+            result = A + B;
+        }
+        else
+        {
+            result = null;
+        }
+
+
+    }
+}
+
+@if (IsPost)
+{
+    if (result == null)
+    {
+        <div class="alert alert-danger" role="alert">
+            Incorrect values A, B!
+        </div>
+    }
+
+    else
+    {
+        <div class="alert alert-primary" role="alert">
+            Result = @result
+        </div>
+    }
+
+}
+
+<form method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Value A:</label>
+        <input name="A" type="text" class="form-control" id="A" placeholder="Value A" value="@A">
+    </div>
+    <p />
+    <div class="form-group">
+        <label for="exampleInputPassword1">Value B:</label>
+        <input name="B" type="text" class="form-control" id="B" placeholder="Value B" value="@B">
+    </div>
+    <small id="emailHelp" class="form-text text-muted">Please, input only numbers!</small>
+    <p />
+    <button type="submit" class="btn btn-primary">Sum</button>
+</form>
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+{
+    <button id="counter" type="button" class="btn btn-secondary">+</button>
+    <button type="submit" class="btn btn-primary">Sum</button>
+
+    <div class="alert alert-primary" role="alert">
+        Current counter value: @Counter.Value
+    </div>
+
+    <button id="logout" type="submit" class="btn btn-primary">Log Out</button>
+}
+
+else
+{
+    <div class="alert alert-primary" role="alert">
+        Sorry, you can not use this feature. Please, log in below.
+    </div>
+    <button id="login" type="button" class="btn btn-secondary">Log in</button>
+}
+
+
+<script>
+    $('#counter').click(function () {
+        location.href = "/Pages/Helpers/IncreaseCounter.cshtml"
+    });
+
+    $('#login').click(function () {
+        location.href = "/Pages/login.cshtml"
+    });
+
+    $('#logout').click(function () {
+        location.href = "/Pages/Helpers/logout.cshtml"
+    });
+</script>
